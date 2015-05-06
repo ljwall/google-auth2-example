@@ -10,7 +10,7 @@ Put together quicly from the exmaples scattered over the google developers docum
 
 To run locally just create an OAuth 2.0 client ID with javascript origin http://localhost:5667 at the google developers console.
 
-You _may_ also need to enable the google+ API for your project. Not totally sure as Ive not test with and without...
+You will need to enable the google+ API for your project.
 
 Ammend `CLIENT_ID` and `CLIENT_SECRET` as approirate in `main.js` and `index.html`.
 

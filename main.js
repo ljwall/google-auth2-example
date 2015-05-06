@@ -5,17 +5,18 @@ var express = require('express'),
     OAuth2 = google.auth.OAuth2,
     oauth2Client = new OAuth2('CLIENT_ID',
                             'CLIENT_SECRET', 
-                            'postmessage');
+                            'postmessage'); // Do not change this paramter
 
 app = express();
-//app.use(bodyParser.json());
 app.use(morgan('dev'));
 app.use(express.static('static'));
 
+// path to recieve code posted from client side JS.
 app.post('/googleoauth2callback', bodyParser.json(), function (req, res) {
+    console.log('CODE:');
     console.log(req.body.code);
     oauth2Client.getToken(req.body.code, function(err, tokens) {
-      // Now tokens contains an access_token and an optional refresh_token. Save them.
+      // Now tokens contains an access_token and maybe a refresh_token.
       if(!err) {
         console.log('TOKENS:')
         console.log(tokens);
@@ -28,7 +29,7 @@ app.post('/googleoauth2callback', bodyParser.json(), function (req, res) {
                 console.log('Error:', err2);
                 res.end('Error 2')
             } else {
-                console.log('Successful responce:');
+                console.log('Successful responce from google+ API:');
                 console.log(response);
                 res.end('Success');
             }
