@@ -1,0 +1,94 @@
+<!-- The top of file index.html -->
+<html itemscope itemtype="http://schema.org/Article">
+<head>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+  <script src="https://apis.google.com/js/platform.js?onload=start" parsetags="explicit" async defer></script>
+    <title>Google auth2 example</title>
+</head>
+<body>
+    <h1>Example</h1>
+    <hr>
+     <div id='glogin'></div>
+     <button id='glogout'>Logout</button>
+    <hr>
+    
+    <table border="1">
+        <tr><td>Signed-in: </td><td><span id="signed-in-cell"></span></td></tr>
+        <tr><td>curr-user-cell</td><td><span id="curr-user-cell"></span></td></tr>
+    </table>
+    
+    <script>
+    
+    var auth2; // The Sign-In object.
+    
+    function start() {
+        gapi.load('auth2', function() {
+            auth2 = gapi.auth2.init({
+                client_id: 'CLIENT_ID',
+                scope: 'profile'
+            });
+            // Listen for sign-in state changes.
+            auth2.isSignedIn.listen(signinChanged);
+            // Listen for changes to current user.
+            auth2.currentUser.listen(userChanged);
+            // Render the button
+            gapi.signin2.render('glogin', {
+                'class': 'g-signin',
+                redirect_uri: 'postmessage',
+                onsuccess: signInCallback,
+                cookiepolicy: 'single_host_origin',
+                accesstype: 'offline',
+                theme: 'dark'
+            });
+        });
+        
+    }
+    
+    
+    /**
+     * Listener method for sign-out live value.
+     *
+     * @param {boolean} val the updated signed out state.
+     */
+    var signinChanged = function (val) {
+      console.log('Signin state changed to ', val);
+      document.getElementById('signed-in-cell').innerText = val;
+    };
+    
+    /**
+    * Listener method for when the user changes.
+    *
+    * @param {GoogleUser} user the updated user.
+    */
+   var userChanged = function (user) {
+     console.log('User now: ', user);
+     document.getElementById('curr-user-cell').innerText = user.getBasicProfile().getName();
+   };  
+      
+      
+    function signInCallback(authResult) {
+        if (authResult['code']) {
+            // Send the code to the server
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:5667/googleoauth2callback',
+                contentType: 'application/json',
+                success: function(result) {
+                  // Handle or verify the server response.
+                  console.log(result);
+                },
+                processData: false,
+                data: JSON.stringify(authResult)
+            });
+        }
+    }
+    
+    $('#glogout').click(function() {
+      // signInCallback defined in step 6.
+      auth2.signOut();
+    });
+    </script>
+
+
+</body>
+</html>
