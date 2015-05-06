@@ -1,6 +1,8 @@
 # Google Auth2 Example
 
-A not very slick example of using the Google sign in for server-side apps flow (https://developers.google.com/identity/sign-in/web/server-side-flow), and using the google api node js client (https://github.com/google/google-api-nodejs-client).
+A not very slick example of using the Google sign in for server-side apps flow (https://developers.google.com/identity/sign-in/web/server-side-flow).
+
+Using the google api node js client (https://github.com/google/google-api-nodejs-client).
 
 ### Required set up
 
