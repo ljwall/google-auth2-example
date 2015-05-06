@@ -6,6 +6,8 @@ Also using the google api node js client (https://github.com/google/google-api-n
 
 Put together quicly from the exmaples scattered over the google developers documentation.
 
+Mainly just console.log's variables for inspection...
+
 ### Required set up
 
 To run locally just create an OAuth 2.0 client ID with javascript origin http://localhost:5667 at the google developers console.
